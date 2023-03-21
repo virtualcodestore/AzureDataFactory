@@ -1,0 +1,9 @@
+{
+	"name": "VirtualCodeStore-adf",
+	"location": "uksouth",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "7ca854c2-a5c7-4a62-82bf-2c025a62f96e",
+		"tenantId": "292f023a-8e07-43a9-a601-00775e30dda1"
+	}
+}
