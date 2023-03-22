@@ -1,0 +1,21 @@
+{
+	"name": "SourceDataset_w54",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "virtualcodestoreexamplesa",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "azure-data-factory-by-example-main.zip",
+				"container": "landing"
+			},
+			"compression": {
+				"type": "ZipDeflate"
+			}
+		}
+	}
+}
