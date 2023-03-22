@@ -33,7 +33,7 @@
 					},
 					"sink": {
 						"type": "AzureSqlSink",
-						"preCopyScript": "--TRUNCATE TABLE dbo.Sales_LOAD\n",
+						"preCopyScript": "TRUNCATE TABLE dbo.Sales_LOAD\n",
 						"writeBehavior": "insert",
 						"sqlWriterUseTableLock": false,
 						"disableMetricsCollection": false
@@ -76,7 +76,7 @@
 							},
 							{
 								"source": {
-									"name": "SalesValueUSD"
+									"name": "SalesValue"
 								},
 								"sink": {
 									"name": "SalesValueUSD",
