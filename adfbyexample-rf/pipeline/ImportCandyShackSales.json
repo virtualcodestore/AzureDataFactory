@@ -17,6 +17,19 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"wildcardFolderPath": "azure-data-factory-by-example-main/SampleData/CandyShack",
+							"wildcardFileName": "*",
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
 					"sink": {
 						"type": "AzureSqlSink",
 						"preCopyScript": "TRUNCATE TABLE dbo.Sales_LOAD\n",
@@ -30,55 +43,80 @@
 						"mappings": [
 							{
 								"source": {
-									"name": "Retailer"
+									"name": "Retailer",
+									"type": "String",
+									"physicalType": "String"
 								},
 								"sink": {
 									"name": "Retailer",
-									"type": "String"
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
 								"source": {
 									"name": "SalesMonth",
-									"type": "String"
+									"type": "String",
+									"physicalType": "String"
 								},
 								"sink": {
 									"name": "SalesMonth",
-									"type": "DateTime"
+									"type": "DateTime",
+									"physicalType": "date"
 								}
 							},
 							{
 								"source": {
 									"name": "Product",
-									"type": "String"
+									"type": "String",
+									"physicalType": "String"
 								},
 								"sink": {
 									"name": "Product",
-									"type": "String"
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
 								"source": {
-									"name": "SalesValue"
+									"name": "SalesValue",
+									"type": "String",
+									"physicalType": "String"
 								},
 								"sink": {
 									"name": "SalesValueUSD",
-									"type": "Decimal"
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 2,
+									"precision": 18
 								}
 							},
 							{
 								"source": {
 									"name": "UnitsSold",
-									"type": "String"
+									"type": "String",
+									"physicalType": "String"
 								},
 								"sink": {
 									"name": "UnitsSold",
-									"type": "Int32"
+									"type": "Int32",
+									"physicalType": "int"
 								}
 							}
-						]
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
 					}
 				},
+				"inputs": [
+					{
+						"referenceName": "ABS_CSV_CandyShack",
+						"type": "DatasetReference"
+					}
+				],
 				"outputs": [
 					{
 						"referenceName": "ASQL_dboSalesLoad",
