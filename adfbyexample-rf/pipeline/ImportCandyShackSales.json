@@ -17,20 +17,6 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"source": {
-						"type": "DelimitedTextSource",
-						"storeSettings": {
-							"type": "AzureBlobStorageReadSettings",
-							"recursive": true,
-							"modifiedDatetimeStart": "2023-03-22T00:00:00.000Z",
-							"wildcardFolderPath": "azure-data-factory-by-example-main/SampleData/CandyShack",
-							"wildcardFileName": "*",
-							"enablePartitionDiscovery": false
-						},
-						"formatSettings": {
-							"type": "DelimitedTextReadSettings"
-						}
-					},
 					"sink": {
 						"type": "AzureSqlSink",
 						"preCopyScript": "TRUNCATE TABLE dbo.Sales_LOAD\n",
@@ -48,8 +34,7 @@
 								},
 								"sink": {
 									"name": "Retailer",
-									"type": "String",
-									"physicalType": "nvarchar"
+									"type": "String"
 								}
 							},
 							{
@@ -59,8 +44,7 @@
 								},
 								"sink": {
 									"name": "SalesMonth",
-									"type": "DateTime",
-									"physicalType": "date"
+									"type": "DateTime"
 								}
 							},
 							{
@@ -70,8 +54,7 @@
 								},
 								"sink": {
 									"name": "Product",
-									"type": "String",
-									"physicalType": "nvarchar"
+									"type": "String"
 								}
 							},
 							{
@@ -80,10 +63,7 @@
 								},
 								"sink": {
 									"name": "SalesValueUSD",
-									"type": "Decimal",
-									"physicalType": "decimal",
-									"scale": 2,
-									"precision": 18
+									"type": "Decimal"
 								}
 							},
 							{
@@ -93,24 +73,12 @@
 								},
 								"sink": {
 									"name": "UnitsSold",
-									"type": "Int32",
-									"physicalType": "int"
+									"type": "Int32"
 								}
 							}
-						],
-						"typeConversion": true,
-						"typeConversionSettings": {
-							"allowDataTruncation": true,
-							"treatBooleanAsNumber": false
-						}
+						]
 					}
 				},
-				"inputs": [
-					{
-						"referenceName": "ABS_CSV_CandyShack",
-						"type": "DatasetReference"
-					}
-				],
 				"outputs": [
 					{
 						"referenceName": "ASQL_dboSalesLoad",

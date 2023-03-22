@@ -1,0 +1,52 @@
+{
+	"name": "ABS_CSV_CandyShack",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "virtualcodestoreexamplesa",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Chapter3"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "2020-04.csv",
+				"folderPath": "azure-data-factory-by-example-main/SampleData/CandyShack",
+				"container": "sampledata"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "Retailer",
+				"type": "String"
+			},
+			{
+				"name": "SkuCode",
+				"type": "String"
+			},
+			{
+				"name": "Product",
+				"type": "String"
+			},
+			{
+				"name": "SalesMonth",
+				"type": "String"
+			},
+			{
+				"name": "SalesValue",
+				"type": "String"
+			},
+			{
+				"name": "UnitsSold",
+				"type": "String"
+			}
+		]
+	}
+}
