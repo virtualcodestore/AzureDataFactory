@@ -97,7 +97,7 @@
 							}
 						],
 						"collectionReference": "$['Sales']",
-						"mapComplexValuesToString": true
+						"mapComplexValuesToString": false
 					}
 				},
 				"inputs": [
