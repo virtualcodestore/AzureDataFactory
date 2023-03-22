@@ -5,6 +5,9 @@
 			"referenceName": "virtualcodestoreexamplesa",
 			"type": "LinkedServiceReference"
 		},
+		"folder": {
+			"name": "Chapter2"
+		},
 		"annotations": [],
 		"type": "Binary",
 		"typeProperties": {
