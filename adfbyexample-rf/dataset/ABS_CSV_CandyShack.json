@@ -24,11 +24,11 @@
 		},
 		"schema": [
 			{
-				"name": "SalesMonth",
+				"name": "Retailer",
 				"type": "String"
 			},
 			{
-				"name": "Retailer",
+				"name": "SkuCode",
 				"type": "String"
 			},
 			{
@@ -36,7 +36,11 @@
 				"type": "String"
 			},
 			{
-				"name": "SalesValueUSD",
+				"name": "SalesMonth",
+				"type": "String"
+			},
+			{
+				"name": "SalesValue",
 				"type": "String"
 			},
 			{
