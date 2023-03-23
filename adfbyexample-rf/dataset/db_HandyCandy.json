@@ -5,6 +5,9 @@
 			"referenceName": "AdfByExample",
 			"type": "LinkedServiceReference"
 		},
+		"folder": {
+			"name": "Chapter3"
+		},
 		"annotations": [],
 		"type": "AzureSqlTable",
 		"schema": [],
