@@ -71,7 +71,7 @@
 							},
 							{
 								"source": {
-									"path": "$['Items'][0]['Product']"
+									"path": "['Product']"
 								},
 								"sink": {
 									"name": "Product",
@@ -80,7 +80,7 @@
 							},
 							{
 								"source": {
-									"path": "$['Items'][0]['Price']"
+									"path": "['Price']"
 								},
 								"sink": {
 									"name": "Price",
