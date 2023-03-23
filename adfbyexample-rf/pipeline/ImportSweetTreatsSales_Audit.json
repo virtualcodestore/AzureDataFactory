@@ -139,7 +139,7 @@
 						},
 						"RunSeqNo": {
 							"value": {
-								"value": "@activity('Lookup RunSeqNo').output.RunSeqNo",
+								"value": "@activity('Lookup RunSeqNo').output.firstRow.RunSeqNo",
 								"type": "Expression"
 							},
 							"type": "Int32"
