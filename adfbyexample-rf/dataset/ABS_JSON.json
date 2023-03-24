@@ -1,5 +1,5 @@
 {
-	"name": "ABS_JSON_adfByExample_kvAuth_copy1",
+	"name": "ABS_JSON",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AnyBlobStorage",
