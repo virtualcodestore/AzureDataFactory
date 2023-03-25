@@ -50,6 +50,7 @@
 				}
 			},
 			"columnDelimiter": ",",
+			"escapeChar": "\"",
 			"firstRowAsHeader": true,
 			"quoteChar": "\""
 		},
