@@ -101,8 +101,7 @@
 								"value": "@pipeline().parameters.File",
 								"type": "Expression"
 							},
-							"LinkedServiceConnectionSecret": "StorageAccountConnectionString",
-							"EscapeCharacter": "\""
+							"LinkedServiceConnectionSecret": "StorageAccountConnectionString"
 						}
 					}
 				],
