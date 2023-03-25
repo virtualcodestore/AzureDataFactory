@@ -66,18 +66,6 @@
 					},
 					"enableStaging": false
 				},
-				"inputs": [
-					{
-						"referenceName": "ABS_CSV",
-						"type": "DatasetReference",
-						"parameters": {
-							"Container": "sampledata",
-							"Directory": ".",
-							"File": ".",
-							"LinkedServiceConnectionSecret": "StorageAccountConnectionString"
-						}
-					}
-				],
 				"outputs": [
 					{
 						"referenceName": "ASQL_dboSalesLoad",
