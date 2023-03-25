@@ -50,10 +50,7 @@
 				}
 			},
 			"columnDelimiter": ",",
-			"escapeChar": {
-				"value": "@dataset().EscapeCharacter",
-				"type": "Expression"
-			},
+			"escapeChar": "\\",
 			"firstRowAsHeader": true,
 			"quoteChar": "\""
 		},
