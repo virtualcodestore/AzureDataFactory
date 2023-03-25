@@ -49,8 +49,8 @@
 						"storeSettings": {
 							"type": "AzureBlobStorageReadSettings",
 							"recursive": true,
-							"wildcardFolderPath": "sampleData/SweetTreats",
-							"wildcardFileName": "*.csv",
+							"wildcardFolderPath": "azure-data-factory-by-example-main/SampleData/SweetTreats",
+							"wildcardFileName": "*",
 							"enablePartitionDiscovery": false
 						},
 						"formatSettings": {
