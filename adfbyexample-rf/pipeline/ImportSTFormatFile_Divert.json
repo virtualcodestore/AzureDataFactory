@@ -115,7 +115,14 @@
 			{
 				"name": "Stored procedure1",
 				"type": "SqlServerStoredProcedure",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "If Rows Exist",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -245,7 +252,7 @@
 				}
 			},
 			{
-				"name": "If Rows Skipped",
+				"name": "If Rows Exist",
 				"type": "IfCondition",
 				"dependsOn": [
 					{
@@ -280,10 +287,7 @@
 									"storeSettings": {
 										"type": "AzureBlobStorageReadSettings",
 										"recursive": true,
-										"wildcardFolderPath": {
-											"value": "@join(skip(split(activity('Import Sales Data').output.logFilePath, '/'), 1), '/')\n",
-											"type": "Expression"
-										},
+										"wildcardFolderPath": "errors/copyactivity-logs/Import sales data",
 										"wildcardFileName": "*",
 										"enablePartitionDiscovery": false
 									},
@@ -291,20 +295,7 @@
 										"type": "DelimitedTextReadSettings"
 									}
 								},
-								"sink": {
-									"type": "AzureSqlSink",
-									"writeBehavior": "insert",
-									"sqlWriterUseTableLock": false
-								},
-								"enableStaging": false,
-								"translator": {
-									"type": "TabularTranslator",
-									"typeConversion": true,
-									"typeConversionSettings": {
-										"allowDataTruncation": true,
-										"treatBooleanAsNumber": false
-									}
-								}
+								"enableStaging": false
 							},
 							"inputs": [
 								{
@@ -316,16 +307,6 @@
 										"File": ".",
 										"LinkedServiceConnectionSecret": "StorageAccountConnectionString",
 										"EscapeCharacter": "\\"
-									}
-								}
-							],
-							"outputs": [
-								{
-									"referenceName": "ds_LoadingError",
-									"type": "DatasetReference",
-									"parameters": {
-										"Db_Schema": "dbo",
-										"Db_Name": "LoadingError"
 									}
 								}
 							]
