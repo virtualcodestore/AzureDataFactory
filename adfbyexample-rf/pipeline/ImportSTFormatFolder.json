@@ -85,7 +85,8 @@
 							"Container": "sampledata",
 							"Directory": ".",
 							"File": ".",
-							"LinkedServiceConnectionSecret": "StorageAccountConnectionString"
+							"LinkedServiceConnectionSecret": "StorageAccountConnectionString",
+							"EscapeCharacter": "\\"
 						}
 					}
 				],
