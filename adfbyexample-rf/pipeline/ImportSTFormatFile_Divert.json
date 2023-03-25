@@ -287,7 +287,7 @@
 									"storeSettings": {
 										"type": "AzureBlobStorageReadSettings",
 										"recursive": true,
-										"wildcardFolderPath": "errors/copyactivity-logs/Import sales data",
+										"wildcardFolderPath": "errors/copyactivity-logs/Import Sales Data",
 										"wildcardFileName": "*",
 										"enablePartitionDiscovery": false
 									},
@@ -295,7 +295,20 @@
 										"type": "DelimitedTextReadSettings"
 									}
 								},
-								"enableStaging": false
+								"sink": {
+									"type": "AzureSqlSink",
+									"writeBehavior": "insert",
+									"sqlWriterUseTableLock": false
+								},
+								"enableStaging": false,
+								"translator": {
+									"type": "TabularTranslator",
+									"typeConversion": true,
+									"typeConversionSettings": {
+										"allowDataTruncation": true,
+										"treatBooleanAsNumber": false
+									}
+								}
 							},
 							"inputs": [
 								{
@@ -307,6 +320,16 @@
 										"File": ".",
 										"LinkedServiceConnectionSecret": "StorageAccountConnectionString",
 										"EscapeCharacter": "\\"
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "ds_LoadingError",
+									"type": "DatasetReference",
+									"parameters": {
+										"Db_Schema": "dbo",
+										"Db_Name": "LoadingError"
 									}
 								}
 							]
