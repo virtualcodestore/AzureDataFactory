@@ -32,9 +32,15 @@
 				},
 				{
 					"name": "lookupJollyGoodSales"
+				},
+				{
+					"name": "JollyGoodSalesDerived"
 				}
 			],
 			"scriptLines": [
+				"parameters{",
+				"     RunSeqNo as integer (-1)",
+				"}",
 				"source(output(",
 				"          Period as date,",
 				"          Product as string,",
@@ -66,7 +72,10 @@
 				"     && Period == Date,",
 				"     multiple: false,",
 				"     pickup: 'any',",
-				"     broadcast: 'auto')~> lookupJollyGoodSales"
+				"     broadcast: 'auto')~> lookupJollyGoodSales",
+				"lookupJollyGoodSales derive(SalesValueUSD = {Unit Price}*{Units Sold}*ExchangeRate,",
+				"          Retailer = 'Jolly Good ltd',",
+				"          RunSeqNo = $RunSeqNo) ~> JollyGoodSalesDerived"
 			]
 		}
 	}
