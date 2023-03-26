@@ -1,0 +1,17 @@
+{
+	"name": "TransformJollyGood Sales",
+	"properties": {
+		"folder": {
+			"name": "Chapter7"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [],
+			"sinks": [],
+			"transformations": [],
+			"scriptLines": [
+				""
+			]
+		}
+	}
+}
