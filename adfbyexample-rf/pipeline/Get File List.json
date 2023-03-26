@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Get Metadata1",
+				"name": "Get file list",
 				"type": "GetMetadata",
 				"dependsOn": [],
 				"policy": {
@@ -19,7 +19,7 @@
 						"referenceName": "ABS_CSV",
 						"type": "DatasetReference",
 						"parameters": {
-							"Container": "sampledate",
+							"Container": "sampledata",
 							"Directory": {
 								"value": "@pipeline().parameters.FolderPath",
 								"type": "Expression"
@@ -32,7 +32,8 @@
 					"fieldList": [
 						"exists",
 						"itemType",
-						"itemName"
+						"itemName",
+						"childItems"
 					],
 					"storeSettings": {
 						"type": "AzureBlobStorageReadSettings",
@@ -40,6 +41,25 @@
 					},
 					"formatSettings": {
 						"type": "DelimitedTextReadSettings"
+					}
+				}
+			},
+			{
+				"name": "ForEach1",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "Get file list",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('Get Metadata1').output.childItems",
+						"type": "Expression"
 					}
 				}
 			}
