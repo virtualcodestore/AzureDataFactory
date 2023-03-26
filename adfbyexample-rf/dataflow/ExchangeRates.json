@@ -22,7 +22,15 @@
 					"name": "ExchangeRates"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "ASQL_dboSalesLoad",
+						"type": "DatasetReference"
+					},
+					"name": "SinkJollyGoodSales"
+				}
+			],
 			"transformations": [
 				{
 					"name": "FilterStreamJollyGoodSales"
@@ -35,6 +43,9 @@
 				},
 				{
 					"name": "JollyGoodSalesDerived"
+				},
+				{
+					"name": "select1"
 				}
 			],
 			"scriptLines": [
@@ -75,7 +86,46 @@
 				"     broadcast: 'auto')~> lookupJollyGoodSales",
 				"lookupJollyGoodSales derive(SalesValueUSD = {Unit Price}*{Units Sold}*ExchangeRate,",
 				"          Retailer = 'Jolly Good ltd',",
-				"          RunSeqNo = $RunSeqNo) ~> JollyGoodSalesDerived"
+				"          RunSeqNo = $RunSeqNo) ~> JollyGoodSalesDerived",
+				"JollyGoodSalesDerived select(mapColumn(",
+				"          SalesMonth = Period,",
+				"          Product,",
+				"          UnitsSold = {Units Sold},",
+				"          SalesValueUSD,",
+				"          Retailer,",
+				"          RunSeqNo",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"select1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          RowId as integer,",
+				"          Retailer as string,",
+				"          SalesMonth as date,",
+				"          Product as string,",
+				"          ManufacturerProductCode as string,",
+				"          SalesValueUSD as decimal(18,2),",
+				"          UnitsSold as integer,",
+				"          SourceFileName as string,",
+				"          CreatedDate as timestamp,",
+				"          RunSeqNo as integer",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          Retailer,",
+				"          SalesMonth,",
+				"          Product,",
+				"          SalesValueUSD,",
+				"          UnitsSold",
+				"     )) ~> SinkJollyGoodSales"
 			]
 		}
 	}

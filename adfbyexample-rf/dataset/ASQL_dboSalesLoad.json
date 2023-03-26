@@ -44,12 +44,19 @@
 				"precision": 10
 			},
 			{
-				"name": "PipelineRunId",
-				"type": "uniqueidentifier"
-			},
-			{
 				"name": "SourceFileName",
 				"type": "nvarchar"
+			},
+			{
+				"name": "CreatedDate",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "RunSeqNo",
+				"type": "int",
+				"precision": 10
 			}
 		],
 		"typeProperties": {
