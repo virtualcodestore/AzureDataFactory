@@ -57,7 +57,7 @@
 					},
 					"sink": {
 						"type": "AzureSqlSink",
-						"preCopyScript": "TRUNCATE TABLE dbo.Sales_LOAD\n",
+						"preCopyScript": "\n",
 						"writeBehavior": "insert",
 						"sqlWriterUseTableLock": false,
 						"disableMetricsCollection": false
@@ -256,7 +256,7 @@
 				"type": "IfCondition",
 				"dependsOn": [
 					{
-						"activity": "Import Sales Data",
+						"activity": "Persist Loaded Sales",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -335,6 +335,42 @@
 							]
 						}
 					]
+				}
+			},
+			{
+				"name": "Persist Loaded Sales",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "Import Sales Data",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[PersistLoadedSales]",
+					"storedProcedureParameters": {
+						"runSeqNo": {
+							"value": {
+								"value": "@variables('RunSeqNo')",
+								"type": "Expression"
+							},
+							"type": "Int32"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "AdfByExample",
+					"type": "LinkedServiceReference"
 				}
 			}
 		],
