@@ -85,7 +85,7 @@
 				}
 			},
 			{
-				"name": "Stored procedure1",
+				"name": "Persist Load Sales Data",
 				"type": "SqlServerStoredProcedure",
 				"dependsOn": [
 					{
@@ -112,6 +112,62 @@
 								"type": "Expression"
 							},
 							"type": "Int32"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "AdfByExample",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Log end of run",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "Data flow1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[LogPipelineEnd]",
+					"storedProcedureParameters": {
+						"FilesRead": {
+							"value": "@activity('Import Sales Data').output.filesRead",
+							"type": "Int32"
+						},
+						"RowsCopied": {
+							"value": "@activity('Import Sales Data').output.rowsCopied",
+							"type": "Int32"
+						},
+						"RowsRead": {
+							"value": "@activity('Import Sales Data').output.rowsRead",
+							"type": "Int32"
+						},
+						"RunEndDateTime": {
+							"value": {
+								"value": "@utcnow()",
+								"type": "Expression"
+							},
+							"type": "DateTime"
+						},
+						"RunSeqNo": {
+							"value": "@activity('Lookup RunSeqNo').output.firstRow.RunSeqNo",
+							"type": "Int32"
+						},
+						"RunStatus": {
+							"value": "@if(equals(activity('Import Sales Data').output.executionDetails[0].status,'Failed'),'Failed','Done')",
+							"type": "String"
 						}
 					}
 				},
