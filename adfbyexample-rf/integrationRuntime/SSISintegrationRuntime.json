@@ -1,0 +1,28 @@
+{
+	"name": "SSISintegrationRuntime",
+	"properties": {
+		"type": "Managed",
+		"description": "Created SSIS integrationRuntime",
+		"typeProperties": {
+			"computeProperties": {
+				"location": "UK South",
+				"nodeSize": "Standard_D2_v3",
+				"numberOfNodes": 1,
+				"maxParallelExecutionsPerNode": 2
+			},
+			"ssisProperties": {
+				"catalogInfo": {
+					"catalogServerEndpoint": "adfbyexamplepb-sql.database.windows.net",
+					"catalogAdminUserName": "adfbyexamplepb-admin",
+					"catalogAdminPassword": {
+						"type": "SecureString",
+						"value": "**********"
+					},
+					"catalogPricingTier": "GP_S_Gen5_1"
+				},
+				"edition": "Standard",
+				"licenseType": "LicenseIncluded"
+			}
+		}
+	}
+}
