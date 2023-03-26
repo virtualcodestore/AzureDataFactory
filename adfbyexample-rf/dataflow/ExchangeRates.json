@@ -1,5 +1,5 @@
 {
-	"name": "TransformJollyGood Sales",
+	"name": "ExchangeRates",
 	"properties": {
 		"folder": {
 			"name": "Chapter7"
@@ -13,10 +13,27 @@
 						"type": "DatasetReference"
 					},
 					"name": "JollyGoodSales"
+				},
+				{
+					"linkedService": {
+						"referenceName": "virtualcodestoreexamplesa",
+						"type": "LinkedServiceReference"
+					},
+					"name": "ExchangeRates"
 				}
 			],
 			"sinks": [],
-			"transformations": [],
+			"transformations": [
+				{
+					"name": "FilterStreamJollyGoodSales"
+				},
+				{
+					"name": "RatesToUSD"
+				},
+				{
+					"name": "lookupJollyGoodSales"
+				}
+			],
 			"scriptLines": [
 				"source(output(",
 				"          Period as date,",
@@ -27,7 +44,29 @@
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false) ~> JollyGoodSales"
+				"     ignoreNoFilesFound: false) ~> JollyGoodSales",
+				"source(output(",
+				"          FromCurrency as string,",
+				"          ToCurrency as string,",
+				"          Date as date,",
+				"          ExchangeRate as double",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     format: 'excel',",
+				"     container: 'sampledata',",
+				"     folderPath: 'azure-data-factory-by-example-main/SampleData',",
+				"     fileName: 'ExchangeRates.xlsx',",
+				"     sheetName: 'Sheet1',",
+				"     firstRowAsHeader: true) ~> ExchangeRates",
+				"JollyGoodSales filter(Product !='Month Total') ~> FilterStreamJollyGoodSales",
+				"ExchangeRates filter(ToCurrency == 'USD') ~> RatesToUSD",
+				"FilterStreamJollyGoodSales, RatesToUSD lookup(Currency == FromCurrency",
+				"     && Period == Date,",
+				"     multiple: false,",
+				"     pickup: 'any',",
+				"     broadcast: 'auto')~> lookupJollyGoodSales"
 			]
 		}
 	}
