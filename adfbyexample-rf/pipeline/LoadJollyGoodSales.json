@@ -167,7 +167,7 @@
 						},
 						"RunStatus": {
 							"value": {
-								"value": "@if(equals(activity('Data flow1').output.executionDetails[0].status,'Failed'),'Failed','Done')",
+								"value": "@if(equals(activity('DataFlow Load Jolly Good Sales').output.metrics.SinkJollyGoodSales.Stages[2].progresState,'Completed'),'Done','Failed')",
 								"type": "Expression"
 							},
 							"type": "String"
