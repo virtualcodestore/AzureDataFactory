@@ -143,15 +143,12 @@
 					"storedProcedureName": "[dbo].[LogPipelineEnd]",
 					"storedProcedureParameters": {
 						"FilesRead": {
-							"value": "@activity('Import Sales Data').output.filesRead",
 							"type": "Int32"
 						},
 						"RowsCopied": {
-							"value": "@activity('Import Sales Data').output.rowsCopied",
 							"type": "Int32"
 						},
 						"RowsRead": {
-							"value": "@activity('Import Sales Data').output.rowsRead",
 							"type": "Int32"
 						},
 						"RunEndDateTime": {
@@ -162,11 +159,17 @@
 							"type": "DateTime"
 						},
 						"RunSeqNo": {
-							"value": "@activity('Lookup RunSeqNo').output.firstRow.RunSeqNo",
+							"value": {
+								"value": "@activity('Lookup RunSeqNo').output.firstRow.RunSeqNo",
+								"type": "Expression"
+							},
 							"type": "Int32"
 						},
 						"RunStatus": {
-							"value": "@if(equals(activity('Import Sales Data').output.executionDetails[0].status,'Failed'),'Failed','Done')",
+							"value": {
+								"value": "@if(equals(activity('Data flow1').output.executionDetails[0].status,'Failed'),'Failed','Done')",
+								"type": "Expression"
+							},
 							"type": "String"
 						}
 					}
