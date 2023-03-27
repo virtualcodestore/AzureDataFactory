@@ -48,7 +48,7 @@
 				}
 			},
 			{
-				"name": "Data flow1",
+				"name": "DataFlow Load Jolly Good Sales",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [
 					{
@@ -89,7 +89,7 @@
 				"type": "SqlServerStoredProcedure",
 				"dependsOn": [
 					{
-						"activity": "Data flow1",
+						"activity": "DataFlow Load Jolly Good Sales",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -125,7 +125,7 @@
 				"type": "SqlServerStoredProcedure",
 				"dependsOn": [
 					{
-						"activity": "Data flow1",
+						"activity": "DataFlow Load Jolly Good Sales",
 						"dependencyConditions": [
 							"Succeeded"
 						]
