@@ -143,12 +143,15 @@
 					"storedProcedureName": "[dbo].[LogPipelineEnd]",
 					"storedProcedureParameters": {
 						"FilesRead": {
+							"value": "0",
 							"type": "Int32"
 						},
 						"RowsCopied": {
+							"value": "0",
 							"type": "Int32"
 						},
 						"RowsRead": {
+							"value": "0",
 							"type": "Int32"
 						},
 						"RunEndDateTime": {
