@@ -5,6 +5,9 @@
 			"referenceName": "virtualcodestoreexamplesa",
 			"type": "LinkedServiceReference"
 		},
+		"folder": {
+			"name": "Chapter7"
+		},
 		"annotations": [],
 		"type": "Excel",
 		"typeProperties": {

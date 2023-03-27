@@ -1,0 +1,35 @@
+{
+	"name": "UpdateProduct",
+	"properties": {
+		"folder": {
+			"name": "Chapter7"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "ds_Azure_table",
+						"type": "DatasetReference"
+					},
+					"name": "SalesSource"
+				}
+			],
+			"sinks": [],
+			"transformations": [],
+			"scriptLines": [
+				"source(output(",
+				"          Timestamp as timestamp,",
+				"          Level as string,",
+				"          OperationName as string,",
+				"          OperationItem as string,",
+				"          Message as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> SalesSource"
+			]
+		}
+	}
+}
