@@ -1,0 +1,13 @@
+{
+	"name": "integrationRuntimeShared",
+	"properties": {
+		"type": "SelfHosted",
+		"description": "Shared Integration runtime",
+		"typeProperties": {
+			"linkedInfo": {
+				"resourceId": "/subscriptions/d9370a3c-f077-42fe-b5d1-31400a8951f0/resourcegroups/VirtualCodeStore-rg/providers/Microsoft.DataFactory/factories/VirtualCodeStoreShared/integrationruntimes/integrationRuntimeSelfHosted",
+				"authorizationType": "Rbac"
+			}
+		}
+	}
+}
