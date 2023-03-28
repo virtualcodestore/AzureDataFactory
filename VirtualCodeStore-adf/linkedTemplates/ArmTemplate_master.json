@@ -1,0 +1,165 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "VirtualCodeStore-adf"
+		},
+		"AdfByExample_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AdfByExample'"
+		},
+		"virtualcodestoreexamplesa_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'virtualcodestoreexamplesa'"
+		},
+		"AnyBlobStorage_properties_typeProperties_connectionString_secretName": {
+			"type": "string",
+			"defaultValue": "@linkedService().ConnectionSecret"
+		},
+		"adfByExample_kvAuth_properties_typeProperties_connectionString_secretName": {
+			"type": "string",
+			"defaultValue": "StorageAccountConnectionString"
+		},
+		"adfbyExamplekv_properties_typeProperties_baseUrl": {
+			"type": "string",
+			"defaultValue": "https://virtualcodestore-kv.vault.azure.net/"
+		},
+		"SSISintegrationRuntime_properties_typeProperties_ssisProperties_catalogInfo_catalogServerEndpoint": {
+			"type": "string",
+			"defaultValue": "adfbyexamplepb-sql.database.windows.net"
+		},
+		"SSISintegrationRuntime_properties_typeProperties_ssisProperties_catalogInfo_catalogAdminUserName": {
+			"type": "string",
+			"defaultValue": "adfbyexamplepb-admin"
+		},
+		"SSISintegrationRuntime_properties_typeProperties_ssisProperties_catalogInfo_catalogAdminPassword": {
+			"type": "secureString"
+		},
+		"integrationRuntimeShared_properties_typeProperties_linkedInfo_resourceId": {
+			"type": "string",
+			"defaultValue": "/subscriptions/d9370a3c-f077-42fe-b5d1-31400a8951f0/resourcegroups/VirtualCodeStore-rg/providers/Microsoft.DataFactory/factories/VirtualCodeStoreShared/integrationruntimes/integrationRuntimeSelfHosted"
+		},
+		"Desktopkv_properties_typeProperties_baseUrl": {
+			"type": "string",
+			"defaultValue": "https://DesktopUser-kv.vault.azure.net/"
+		},
+		"DesktopFileServices_properties_typeProperties_host": {
+			"type": "string",
+			"defaultValue": "\\\\DESKTOP-NP1I4VA\\Desktop-e"
+		},
+		"DesktopFileServices_properties_typeProperties_userId": {
+			"type": "string",
+			"defaultValue": "paul.bailey@virtualcodestor"
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI to storage account containing linked ARM templates"
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Sas token to storage account containing linked ARM templates"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "VirtualCodeStore-adf_ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"AdfByExample_connectionString": {
+						"value": "[parameters('AdfByExample_connectionString')]"
+					},
+					"virtualcodestoreexamplesa_connectionString": {
+						"value": "[parameters('virtualcodestoreexamplesa_connectionString')]"
+					},
+					"adfbyExamplekv_properties_typeProperties_baseUrl": {
+						"value": "[parameters('adfbyExamplekv_properties_typeProperties_baseUrl')]"
+					},
+					"SSISintegrationRuntime_properties_typeProperties_ssisProperties_catalogInfo_catalogServerEndpoint": {
+						"value": "[parameters('SSISintegrationRuntime_properties_typeProperties_ssisProperties_catalogInfo_catalogServerEndpoint')]"
+					},
+					"SSISintegrationRuntime_properties_typeProperties_ssisProperties_catalogInfo_catalogAdminUserName": {
+						"value": "[parameters('SSISintegrationRuntime_properties_typeProperties_ssisProperties_catalogInfo_catalogAdminUserName')]"
+					},
+					"SSISintegrationRuntime_properties_typeProperties_ssisProperties_catalogInfo_catalogAdminPassword": {
+						"value": "[parameters('SSISintegrationRuntime_properties_typeProperties_ssisProperties_catalogInfo_catalogAdminPassword')]"
+					},
+					"integrationRuntimeShared_properties_typeProperties_linkedInfo_resourceId": {
+						"value": "[parameters('integrationRuntimeShared_properties_typeProperties_linkedInfo_resourceId')]"
+					},
+					"Desktopkv_properties_typeProperties_baseUrl": {
+						"value": "[parameters('Desktopkv_properties_typeProperties_baseUrl')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "VirtualCodeStore-adf_ArmTemplate_1",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_1.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"AnyBlobStorage_properties_typeProperties_connectionString_secretName": {
+						"value": "[parameters('AnyBlobStorage_properties_typeProperties_connectionString_secretName')]"
+					},
+					"adfByExample_kvAuth_properties_typeProperties_connectionString_secretName": {
+						"value": "[parameters('adfByExample_kvAuth_properties_typeProperties_connectionString_secretName')]"
+					},
+					"DesktopFileServices_properties_typeProperties_host": {
+						"value": "[parameters('DesktopFileServices_properties_typeProperties_host')]"
+					},
+					"DesktopFileServices_properties_typeProperties_userId": {
+						"value": "[parameters('DesktopFileServices_properties_typeProperties_userId')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'VirtualCodeStore-adf_ArmTemplate_0')]"
+			]
+		},
+		{
+			"name": "VirtualCodeStore-adf_ArmTemplate_2",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_2.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'VirtualCodeStore-adf_ArmTemplate_1')]"
+			]
+		}
+	]
+}

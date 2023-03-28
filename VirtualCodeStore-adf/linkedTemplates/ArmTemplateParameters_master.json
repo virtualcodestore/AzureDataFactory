@@ -1,0 +1,51 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "VirtualCodeStore-adf"
+		},
+		"AdfByExample_connectionString": {
+			"value": ""
+		},
+		"virtualcodestoreexamplesa_connectionString": {
+			"value": ""
+		},
+		"AnyBlobStorage_properties_typeProperties_connectionString_secretName": {
+			"value": "@linkedService().ConnectionSecret"
+		},
+		"adfByExample_kvAuth_properties_typeProperties_connectionString_secretName": {
+			"value": "StorageAccountConnectionString"
+		},
+		"adfbyExamplekv_properties_typeProperties_baseUrl": {
+			"value": "https://virtualcodestore-kv.vault.azure.net/"
+		},
+		"SSISintegrationRuntime_properties_typeProperties_ssisProperties_catalogInfo_catalogServerEndpoint": {
+			"value": "adfbyexamplepb-sql.database.windows.net"
+		},
+		"SSISintegrationRuntime_properties_typeProperties_ssisProperties_catalogInfo_catalogAdminUserName": {
+			"value": "adfbyexamplepb-admin"
+		},
+		"SSISintegrationRuntime_properties_typeProperties_ssisProperties_catalogInfo_catalogAdminPassword": {
+			"value": ""
+		},
+		"integrationRuntimeShared_properties_typeProperties_linkedInfo_resourceId": {
+			"value": "/subscriptions/d9370a3c-f077-42fe-b5d1-31400a8951f0/resourcegroups/VirtualCodeStore-rg/providers/Microsoft.DataFactory/factories/VirtualCodeStoreShared/integrationruntimes/integrationRuntimeSelfHosted"
+		},
+		"Desktopkv_properties_typeProperties_baseUrl": {
+			"value": "https://DesktopUser-kv.vault.azure.net/"
+		},
+		"DesktopFileServices_properties_typeProperties_host": {
+			"value": "\\\\DESKTOP-NP1I4VA\\Desktop-e"
+		},
+		"DesktopFileServices_properties_typeProperties_userId": {
+			"value": "paul.bailey@virtualcodestor"
+		},
+		"containerUri": {
+			"value": ""
+		},
+		"containerSasToken": {
+			"value": ""
+		}
+	}
+}
