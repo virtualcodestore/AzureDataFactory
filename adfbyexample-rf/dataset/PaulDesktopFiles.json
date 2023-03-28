@@ -1,0 +1,21 @@
+{
+	"name": "PaulDesktopFiles",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "DesktopFileServices",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Chapter8"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "FileServerLocation",
+				"fileName": "04-20.csv",
+				"folderPath": "AdfByExample-IR"
+			}
+		}
+	}
+}

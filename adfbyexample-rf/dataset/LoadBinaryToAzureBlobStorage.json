@@ -1,0 +1,17 @@
+{
+	"name": "LoadBinaryToAzureBlobStorage",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "virtualcodestoreexamplesa",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"container": "landing"
+			}
+		}
+	}
+}
