@@ -1,0 +1,46 @@
+{
+	"name": "UpdateProductDimension",
+	"properties": {
+		"description": "Update Product Dimension",
+		"activities": [
+			{
+				"name": "Update Product Dimension",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "UpdateProduct",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"SalesSource": {
+								"Db_Schema": "dbo",
+								"Db_Name": "Sales"
+							},
+							"SourceProducts": {
+								"Db_Schema": "dbo",
+								"Db_Name": "Product"
+							}
+						}
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
+			}
+		],
+		"folder": {
+			"name": "Chapter7"
+		},
+		"annotations": []
+	}
+}
