@@ -1,0 +1,24 @@
+{
+	"name": "DesktopFileServices",
+	"properties": {
+		"description": "Paul desktop",
+		"annotations": [],
+		"type": "FileServer",
+		"typeProperties": {
+			"host": "\\\\DESKTOP-NP1I4VA\\Desktop-e",
+			"userId": "paul.bailey@virtualcodestor",
+			"password": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "adfbyExamplekv",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "adfByExample-User-Password"
+			}
+		},
+		"connectVia": {
+			"referenceName": "integrationRuntimeShared",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}
