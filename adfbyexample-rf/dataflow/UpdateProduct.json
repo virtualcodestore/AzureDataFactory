@@ -16,7 +16,11 @@
 				}
 			],
 			"sinks": [],
-			"transformations": [],
+			"transformations": [
+				{
+					"name": "derivedColumn1"
+				}
+			],
 			"scriptLines": [
 				"source(output(",
 				"          RowId as integer,",
@@ -30,7 +34,8 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     format: 'table') ~> SalesSource"
+				"     format: 'table') ~> SalesSource",
+				"SalesSource derive() ~> derivedColumn1"
 			]
 		}
 	}
