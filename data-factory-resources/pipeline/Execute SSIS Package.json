@@ -1,0 +1,46 @@
+{
+	"name": "Execute SSIS Package",
+	"properties": {
+		"activities": [
+			{
+				"name": "Execute SSIS package1",
+				"type": "ExecuteSSISPackage",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"packageLocation": {
+						"packagePath": "AzureByExample/Azure-SSIS-IntegrationRuntimeTest/TestPackage.dtsx",
+						"type": "SSISDB"
+					},
+					"environmentPath": null,
+					"connectVia": {
+						"referenceName": "SSISintegrationRuntime",
+						"type": "IntegrationRuntimeReference"
+					},
+					"loggingLevel": "Basic",
+					"packageParameters": {
+						"PipelineRunId": {
+							"value": {
+								"value": "@pipeline().RunId",
+								"type": "Expression"
+							}
+						}
+					}
+				}
+			}
+		],
+		"folder": {
+			"name": "Chapter8"
+		},
+		"annotations": [],
+		"lastPublishTime": "2023-03-28T19:25:15Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

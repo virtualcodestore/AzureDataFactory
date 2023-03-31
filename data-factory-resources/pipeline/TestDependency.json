@@ -1,0 +1,82 @@
+{
+	"name": "TestDependency",
+	"properties": {
+		"activities": [
+			{
+				"name": "Set variable1",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "TestVariable",
+					"value": {
+						"value": "@string(int('not an int'))",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "Set variable2",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "Set variable4",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "Set variable1",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "TestVariable",
+					"value": "Paul"
+				}
+			},
+			{
+				"name": "Set variable3",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "Set variable2",
+						"dependencyConditions": [
+							"Skipped",
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "TestVariable",
+					"value": "Bailey"
+				}
+			},
+			{
+				"name": "Set variable4",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "TestVariable",
+					"value": "Painting"
+				}
+			}
+		],
+		"variables": {
+			"TestVariable": {
+				"type": "String"
+			}
+		},
+		"folder": {
+			"name": "Chapter6"
+		},
+		"annotations": [],
+		"lastPublishTime": "2023-03-28T19:25:15Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

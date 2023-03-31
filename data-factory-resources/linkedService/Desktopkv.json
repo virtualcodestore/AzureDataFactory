@@ -1,0 +1,12 @@
+{
+	"name": "Desktopkv",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"description": "Pauls desktop",
+		"annotations": [],
+		"type": "AzureKeyVault",
+		"typeProperties": {
+			"baseUrl": "https://DesktopUser-kv.vault.azure.net/"
+		}
+	}
+}

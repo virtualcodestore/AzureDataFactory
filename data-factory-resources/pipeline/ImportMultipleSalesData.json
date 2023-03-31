@@ -1,0 +1,54 @@
+{
+	"name": "ImportMultipleSalesData",
+	"properties": {
+		"activities": [
+			{
+				"name": "Import Sweet Treats Data",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "ImportSTFormatFolder",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"WildcardFolderPath": "azure-data-factory-by-example-main/SampleData/SweetTreats",
+						"WildcardFileName": "*.csv"
+					}
+				}
+			},
+			{
+				"name": "Import Deserts4All Data",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "Import Sweet Treats Data",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "ImportSTFormatFolder",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"WildcardFolderPath": "azure-data-factory-by-example-main/SampleData/Desserts4All",
+						"WildcardFileName": "*.csv"
+					}
+				}
+			}
+		],
+		"folder": {
+			"name": "Chapter5"
+		},
+		"annotations": [],
+		"lastPublishTime": "2023-03-28T19:25:19Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

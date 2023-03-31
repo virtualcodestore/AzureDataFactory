@@ -1,0 +1,56 @@
+{
+	"name": "ds_Azure_table",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AdfByExample",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"Db_Schema": {
+				"type": "string"
+			},
+			"Db_Name": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "Chapter7"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "Timestamp",
+				"type": "datetime2",
+				"scale": 7
+			},
+			{
+				"name": "Level",
+				"type": "nvarchar"
+			},
+			{
+				"name": "OperationName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "OperationItem",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Message",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": {
+				"value": "@dataset().Db_Schema",
+				"type": "Expression"
+			},
+			"table": {
+				"value": "@dataset().Db_Name",
+				"type": "Expression"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

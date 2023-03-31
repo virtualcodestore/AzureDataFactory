@@ -1,0 +1,133 @@
+{
+	"name": "ExchangeRates",
+	"properties": {
+		"folder": {
+			"name": "Chapter7"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "Xlsx_JollyGood",
+						"type": "DatasetReference"
+					},
+					"name": "JollyGoodSales"
+				},
+				{
+					"linkedService": {
+						"referenceName": "virtualcodestoreexamplesa",
+						"type": "LinkedServiceReference"
+					},
+					"name": "ExchangeRates"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "ASQL_dboSalesLoad",
+						"type": "DatasetReference"
+					},
+					"name": "SinkJollyGoodSales"
+				}
+			],
+			"transformations": [
+				{
+					"name": "FilterStreamJollyGoodSales"
+				},
+				{
+					"name": "RatesToUSD"
+				},
+				{
+					"name": "lookupJollyGoodSales"
+				},
+				{
+					"name": "JollyGoodSalesDerived"
+				},
+				{
+					"name": "select1"
+				}
+			],
+			"scriptLines": [
+				"parameters{",
+				"     RunSeqNo as integer (-1)",
+				"}",
+				"source(output(",
+				"          Period as date,",
+				"          Product as string,",
+				"          {Unit Price} as double,",
+				"          Currency as string,",
+				"          {Units Sold} as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> JollyGoodSales",
+				"source(output(",
+				"          FromCurrency as string,",
+				"          ToCurrency as string,",
+				"          Date as date,",
+				"          ExchangeRate as double",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     format: 'excel',",
+				"     container: 'sampledata',",
+				"     folderPath: 'azure-data-factory-by-example-main/SampleData',",
+				"     fileName: 'ExchangeRates.xlsx',",
+				"     sheetName: 'Sheet1',",
+				"     firstRowAsHeader: true) ~> ExchangeRates",
+				"JollyGoodSales filter(Product !='Month Total') ~> FilterStreamJollyGoodSales",
+				"ExchangeRates filter(ToCurrency == 'USD') ~> RatesToUSD",
+				"FilterStreamJollyGoodSales, RatesToUSD lookup(Currency == FromCurrency",
+				"     && Period == Date,",
+				"     multiple: false,",
+				"     pickup: 'any',",
+				"     broadcast: 'auto')~> lookupJollyGoodSales",
+				"lookupJollyGoodSales derive(SalesValueUSD = {Unit Price}*{Units Sold}*ExchangeRate,",
+				"          Retailer = 'Jolly Good ltd',",
+				"          RunSeqNo = $RunSeqNo) ~> JollyGoodSalesDerived",
+				"JollyGoodSalesDerived select(mapColumn(",
+				"          SalesMonth = Period,",
+				"          Product,",
+				"          UnitsSold = {Units Sold},",
+				"          SalesValueUSD,",
+				"          Retailer,",
+				"          RunSeqNo",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"select1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          RowId as integer,",
+				"          Retailer as string,",
+				"          SalesMonth as date,",
+				"          Product as string,",
+				"          ManufacturerProductCode as string,",
+				"          SalesValueUSD as decimal(18,2),",
+				"          UnitsSold as integer,",
+				"          SourceFileName as string,",
+				"          CreatedDate as timestamp,",
+				"          RunSeqNo as integer",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          Retailer,",
+				"          SalesMonth,",
+				"          Product,",
+				"          SalesValueUSD,",
+				"          UnitsSold,",
+				"          RunSeqNo",
+				"     )) ~> SinkJollyGoodSales"
+			]
+		}
+	}
+}

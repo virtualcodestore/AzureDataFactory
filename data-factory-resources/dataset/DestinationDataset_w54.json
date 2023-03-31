@@ -1,0 +1,21 @@
+{
+	"name": "DestinationDataset_w54",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "virtualcodestoreexamplesa",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Chapter2"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"container": "sampledata"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

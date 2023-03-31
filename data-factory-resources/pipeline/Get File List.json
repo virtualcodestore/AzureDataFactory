@@ -1,0 +1,106 @@
+{
+	"name": "Get File List",
+	"properties": {
+		"activities": [
+			{
+				"name": "Get file list",
+				"type": "GetMetadata",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataset": {
+						"referenceName": "ABS_CSV",
+						"type": "DatasetReference",
+						"parameters": {
+							"Container": "sampledata",
+							"Directory": {
+								"value": "@pipeline().parameters.FolderPath",
+								"type": "Expression"
+							},
+							"File": " ",
+							"LinkedServiceConnectionSecret": "StorageAccountConnectionString",
+							"EscapeCharacter": "\\"
+						}
+					},
+					"fieldList": [
+						"exists",
+						"itemType",
+						"itemName",
+						"childItems"
+					],
+					"storeSettings": {
+						"type": "AzureBlobStorageReadSettings",
+						"recursive": true,
+						"enablePartitionDiscovery": false
+					},
+					"formatSettings": {
+						"type": "DelimitedTextReadSettings"
+					}
+				}
+			},
+			{
+				"name": "ForEach1",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "Get file list",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('Get file list').output.childItems",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "Execute Pipeline1",
+							"type": "ExecutePipeline",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"pipeline": {
+									"referenceName": "ImportSTFormatFile_Divert",
+									"type": "PipelineReference"
+								},
+								"waitOnCompletion": true,
+								"parameters": {
+									"Directory": {
+										"value": "@pipeline().parameters.FolderPath",
+										"type": "Expression"
+									},
+									"File": {
+										"value": "@item().name",
+										"type": "Expression"
+									}
+								}
+							}
+						}
+					]
+				}
+			}
+		],
+		"parameters": {
+			"FolderPath": {
+				"type": "string",
+				"defaultValue": "azure-data-factory-by-example-main/SampleData/NaughtyButNice"
+			}
+		},
+		"folder": {
+			"name": "Chapter6"
+		},
+		"annotations": [],
+		"lastPublishTime": "2023-03-28T19:25:19Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

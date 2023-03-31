@@ -1,0 +1,93 @@
+{
+	"name": "UpdateProduct",
+	"properties": {
+		"folder": {
+			"name": "Chapter7"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "ds_Azure_table",
+						"type": "DatasetReference"
+					},
+					"name": "SalesSource"
+				},
+				{
+					"dataset": {
+						"referenceName": "ds_Azure_table",
+						"type": "DatasetReference"
+					},
+					"name": "SourceProducts"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "AzureSqlTable1",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "derivedColumn1"
+				},
+				{
+					"name": "aggregate1"
+				},
+				{
+					"name": "exists1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          RowId as integer,",
+				"          Retailer as string,",
+				"          SalesMonth as date,",
+				"          Product as string,",
+				"          SalesValueUSD as decimal(19,2),",
+				"          UnitsSold as integer,",
+				"          RunSeqNo as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> SalesSource",
+				"source(output(",
+				"          Product as string,",
+				"          ProductName as string,",
+				"          WeightInOunces as decimal(19,2),",
+				"          WeightInGrams as decimal(19,2)",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> SourceProducts",
+				"SalesSource derive(ProductName = trim(left(Product,length(Product)-length(:WeightString))),",
+				"          WeightInOunces = toFloat(replace(:WeightString,:WeightUnit,''))/iif(:WeightUnit=='g',0.035273,1.0),",
+				"          WeightInGrams = toFloat(replace(:WeightString,:WeightUnit,''))/iif(:WeightUnit=='oz',28.3495,1.0),",
+				"          WeightString := right(Product,locate(' ',reverse(Product))-1),",
+				"          WeightUnit := iif(endsWith(Product,'oz'),'oz','g')) ~> derivedColumn1",
+				"derivedColumn1 aggregate(groupBy(Product),",
+				"     ProductName = first(ProductName),",
+				"          each(match(startsWith(name,'Weight')), $$ = first($$))) ~> aggregate1",
+				"aggregate1, SourceProducts exists(aggregate1@Product == SourceProducts@Product,",
+				"     negate:true,",
+				"     broadcast: 'auto')~> exists1",
+				"exists1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
+			]
+		}
+	}
+}
